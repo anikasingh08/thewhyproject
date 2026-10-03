@@ -1,0 +1,1897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>The Why Project</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: #f7f3ec;
+      color: #25221f;
+      min-height: 100vh;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      min-height: 65vh;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      text-align: center;
+
+      padding: 70px 20px;
+
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(210, 183, 145, 0.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 70%,
+          rgba(180, 155, 120, 0.15),
+          transparent 30%
+        ),
+        #f7f3ec;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8b7257;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(55px, 10vw, 110px);
+      line-height: 0.95;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 span {
+      color: #9c7652;
+    }
+
+    .hero p {
+      max-width: 650px;
+      font-size: 18px;
+      line-height: 1.7;
+      color: #68615a;
+    }
+
+    .scroll-hint {
+      margin-top: 50px;
+      font-size: 13px;
+      color: #968d84;
+      letter-spacing: 1px;
+    }
+
+
+    /* =========================
+       CONTROLS
+    ========================= */
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+
+      padding: 18px 5%;
+
+      background: rgba(247, 243, 236, 0.94);
+      backdrop-filter: blur(12px);
+
+      border-bottom: 1px solid #e5ded4;
+    }
+
+    .control-inner {
+      max-width: 1200px;
+      margin: auto;
+
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .search input {
+      width: 100%;
+
+      padding: 13px 18px;
+
+      border: 1px solid #ddd3c7;
+      border-radius: 30px;
+
+      background: #fffdf9;
+
+      outline: none;
+
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .search input:focus {
+      border-color: #9c7652;
+    }
+
+    .random-btn {
+      border: none;
+
+      background: #29251f;
+      color: white;
+
+      padding: 13px 20px;
+
+      border-radius: 30px;
+
+      cursor: pointer;
+
+      font-family: inherit;
+      font-weight: 600;
+
+      transition: 0.2s;
+    }
+
+    .random-btn:hover {
+      transform: translateY(-2px);
+      background: #9c7652;
+    }
+
+    .categories {
+      max-width: 1200px;
+      margin: 15px auto 0;
+
+      display: flex;
+      gap: 8px;
+
+      overflow-x: auto;
+      padding-bottom: 3px;
+    }
+
+    .category {
+      white-space: nowrap;
+
+      padding: 8px 15px;
+
+      border-radius: 20px;
+
+      border: 1px solid #ded5ca;
+
+      background: transparent;
+
+      cursor: pointer;
+
+      font-family: inherit;
+
+      color: #71685f;
+
+      transition: 0.2s;
+    }
+
+    .category:hover,
+    .category.active {
+      background: #29251f;
+      color: white;
+      border-color: #29251f;
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    main {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 65px 5% 100px;
+    }
+
+    .section-heading {
+      margin-bottom: 35px;
+    }
+
+    .section-heading h2 {
+      font-family: "Playfair Display", serif;
+
+      font-size: 38px;
+
+      margin-bottom: 8px;
+    }
+
+    .section-heading p {
+      color: #81776e;
+    }
+
+
+    /* =========================
+       ENVELOPE GRID
+    ========================= */
+
+    .envelope-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 28px;
+    }
+
+
+    /* =========================
+       ENVELOPE CARD
+    ========================= */
+
+    .envelope-card {
+      perspective: 1000px;
+
+      height: 250px;
+
+      cursor: pointer;
+    }
+
+    .envelope-inner {
+      width: 100%;
+      height: 100%;
+
+      position: relative;
+
+      transition: transform 0.7s;
+
+      transform-style: preserve-3d;
+    }
+
+    .envelope-card.open .envelope-inner {
+      transform: rotateY(180deg);
+    }
+
+    .envelope-front,
+    .envelope-back {
+      position: absolute;
+
+      width: 100%;
+      height: 100%;
+
+      backface-visibility: hidden;
+
+      border-radius: 16px;
+    }
+
+
+    /* =========================
+       ENVELOPE FRONT
+    ========================= */
+
+    .envelope-front {
+      background: #e5c7a5;
+
+      border: 1px solid #d4b38c;
+
+      box-shadow:
+        0 12px 30px rgba(68, 53, 39, 0.08);
+
+      overflow: hidden;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Envelope flap */
+
+    .envelope-front::before {
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 65%;
+
+      background: #efd8bb;
+
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+      );
+    }
+
+    /* Envelope bottom fold */
+
+    .envelope-front::after {
+      content: "";
+
+      position: absolute;
+
+      bottom: 0;
+      left: 0;
+
+      border-style: solid;
+
+      border-width:
+        0
+        0
+        110px
+        170px;
+
+      border-color:
+        transparent
+        transparent
+        #d8b995
+        transparent;
+    }
+
+
+    /* =========================
+       QUESTION ON ENVELOPE
+    ========================= */
+
+    .envelope-label {
+      position: relative;
+
+      z-index: 2;
+
+      text-align: center;
+
+      padding: 25px;
+
+      width: 100%;
+    }
+
+    .envelope-number {
+      font-size: 11px;
+
+      letter-spacing: 2px;
+
+      color: #8c6948;
+
+      margin-bottom: 14px;
+
+      font-weight: 700;
+    }
+
+    .envelope-label h3 {
+      font-family: "Playfair Display", serif;
+
+      font-size: 19px;
+
+      line-height: 1.35;
+
+      font-weight: 600;
+
+      max-width: 280px;
+
+      margin: auto;
+    }
+
+    .tap {
+      margin-top: 16px;
+
+      font-size: 11px;
+
+      color: #80664b;
+
+      opacity: 0.8;
+    }
+
+
+    /* =========================
+       ENVELOPE BACK
+    ========================= */
+
+    .envelope-back {
+      transform: rotateY(180deg);
+
+      background: #fffdf9;
+
+      border: 1px solid #e1d9ce;
+
+      padding: 27px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      box-shadow:
+        0 12px 30px rgba(68, 53, 39, 0.08);
+    }
+
+    .back-category {
+      text-transform: uppercase;
+
+      font-size: 10px;
+
+      letter-spacing: 2px;
+
+      color: #a17d59;
+
+      font-weight: 700;
+    }
+
+    .back-question {
+      font-family: "Playfair Display", serif;
+
+      font-size: 20px;
+
+      line-height: 1.3;
+    }
+
+    .open-answer {
+      font-size: 12px;
+
+      color: #9a9188;
+    }
+
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal {
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(35, 30, 25, 0.6);
+
+      backdrop-filter: blur(7px);
+
+      z-index: 100;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(700px, 100%);
+
+      max-height: 85vh;
+
+      overflow-y: auto;
+
+      background: #fffdf9;
+
+      border-radius: 20px;
+
+      padding: 45px;
+
+      position: relative;
+
+      animation: appear 0.3s ease;
+    }
+
+    @keyframes appear {
+
+      from {
+        opacity: 0;
+        transform:
+          translateY(20px)
+          scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform:
+          translateY(0)
+          scale(1);
+      }
+
+    }
+
+    .close {
+      position: absolute;
+
+      right: 20px;
+      top: 17px;
+
+      border: none;
+
+      background: none;
+
+      font-size: 25px;
+
+      cursor: pointer;
+
+      color: #81776e;
+    }
+
+    .modal-category {
+      text-transform: uppercase;
+
+      letter-spacing: 2px;
+
+      font-size: 11px;
+
+      color: #9c7652;
+
+      font-weight: 700;
+
+      margin-bottom: 15px;
+    }
+
+    .modal-question {
+      font-family: "Playfair Display", serif;
+
+      font-size: clamp(30px, 5vw, 48px);
+
+      line-height: 1.15;
+
+      margin-bottom: 30px;
+    }
+
+    .status {
+      display: inline-block;
+
+      font-size: 11px;
+
+      padding: 6px 10px;
+
+      border-radius: 15px;
+
+      background: #eee8df;
+
+      color: #776b60;
+
+      margin-bottom: 25px;
+    }
+
+    .answer {
+      color: #554e48;
+
+      font-size: 16px;
+
+      line-height: 1.8;
+    }
+
+    .answer p {
+      margin-bottom: 18px;
+    }
+
+    .source {
+      margin-top: 30px;
+
+      padding-top: 20px;
+
+      border-top: 1px solid #e6ded4;
+
+      font-size: 13px;
+
+      color: #847a70;
+
+      line-height: 1.6;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      padding: 50px 20px;
+
+      text-align: center;
+
+      border-top: 1px solid #e4dcd2;
+
+      color: #8a8178;
+
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: #5e554d;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      .envelope-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .hero {
+        min-height: 55vh;
+      }
+
+      .hero h1 {
+        font-size: 58px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .envelope-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-box {
+        padding: 32px 25px;
+      }
+
+      .modal-question {
+        font-size: 32px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="eyebrow">
+      A curiosity archive
+    </div>
+
+    <h1>
+      The <span>Why</span><br>
+      Project
+    </h1>
+
+    <p>
+      We ask “why?” every day. But how often do we actually stop
+      to look for the answer?
+      Open an envelope. Ask a question. Go a little deeper.
+    </p>
+
+    <div class="scroll-hint">
+      ↓ Explore the questions
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       CONTROLS
+  ========================= -->
+
+  <section class="controls">
+
+    <div class="control-inner">
+
+      <div class="search">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search a why..."
+        >
+
+      </div>
+
+
+      <button
+        class="random-btn"
+        onclick="randomWhy()"
+      >
+        🎲 Give me a Why
+      </button>
+
+    </div>
+
+
+    <div class="categories">
+
+      <button
+        class="category active"
+        data-category="All"
+      >
+        All
+      </button>
+
+      <button
+        class="category"
+        data-category="Human"
+      >
+        Human
+      </button>
+
+      <button
+        class="category"
+        data-category="Emotions"
+      >
+        Emotions
+      </button>
+
+      <button
+        class="category"
+        data-category="Society"
+      >
+        Society
+      </button>
+
+      <button
+        class="category"
+        data-category="Earth"
+      >
+        Earth
+      </button>
+
+      <button
+        class="category"
+        data-category="Science"
+      >
+        Science
+      </button>
+
+      <button
+        class="category"
+        data-category="Big Questions"
+      >
+        Big Questions
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main>
+
+    <div class="section-heading">
+
+      <h2>
+        Pick a question.
+      </h2>
+
+      <p>
+        Choose the why you're most curious about.
+      </p>
+
+    </div>
+
+
+    <div
+      class="envelope-grid"
+      id="envelopeGrid"
+    ></div>
+
+  </main>
+
+
+
+  <!-- =========================
+       MODAL
+  ========================= -->
+
+  <div
+    class="modal"
+    id="answerModal"
+  >
+
+    <div class="modal-box">
+
+      <button
+        class="close"
+        onclick="closeModal()"
+      >
+        ×
+      </button>
+
+
+      <div
+        class="modal-category"
+        id="modalCategory"
+      ></div>
+
+
+      <h2
+        class="modal-question"
+        id="modalQuestion"
+      ></h2>
+
+
+      <div
+        class="status"
+        id="modalStatus"
+      ></div>
+
+
+      <div
+        class="answer"
+        id="modalAnswer"
+      ></div>
+
+
+      <div
+        class="source"
+        id="modalSource"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <p>
+      <strong>The Why Project</strong>
+      — made for people who are still curious.
+    </p>
+
+    <p style="margin-top:8px;">
+      Keep asking why.
+    </p>
+
+  </footer>
+
+
+
+  <script>
+
+
+    /* =========================================================
+       QUESTION DATABASE
+    ========================================================= */
+
+    const questions = [
+
+      {
+        category: "Human",
+
+        question:
+          "Why do we procrastinate even when we know something is important?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Procrastination usually isn't simply about being lazy. Our brains tend to value immediate rewards more strongly than distant ones.",
+
+          "When a task feels boring, difficult, uncertain, or emotionally uncomfortable, avoiding it can give us immediate relief. That relief reinforces the habit, even when we know the task matters.",
+
+          "This is why making a task smaller, easier to start, or more immediately rewarding can sometimes make it easier to begin."
+
+        ],
+
+        source:
+          "Related ideas: temporal discounting, emotion regulation, and behavioral psychology."
+
+      },
+
+
+      {
+        category: "Human",
+
+        question:
+          "Why do we care so much about what other people think?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Humans evolved as intensely social creatures. For much of human history, belonging to a group affected access to protection, resources, and cooperation.",
+
+          "Because of this, our brains are highly sensitive to social approval and rejection.",
+
+          "Even today, the feeling that other people are judging us can trigger surprisingly strong emotional reactions."
+
+        ],
+
+        source:
+          "Related fields: social psychology, evolutionary psychology, and neuroscience."
+
+      },
+
+
+      {
+        category: "Human",
+
+        question:
+          "Why do embarrassing memories stay with us for so long?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Emotionally intense events tend to receive more attention and can become strongly connected to memory.",
+
+          "Embarrassing experiences also contain useful social information: our brains may treat them as lessons about what to avoid in the future.",
+
+          "The result is that one awkward moment from years ago can sometimes feel much more memorable than dozens of ordinary days."
+
+        ],
+
+        source:
+          "Related fields: emotional memory and social learning."
+
+      },
+
+
+      {
+        category: "Emotions",
+
+        question:
+          "Why do we sometimes feel lonely even when we're surrounded by people?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Loneliness isn't simply about the number of people around us. It is strongly connected to whether we feel understood, connected, and supported.",
+
+          "Someone can therefore be surrounded by classmates, friends, or coworkers while still experiencing loneliness.",
+
+          "In other words, social quantity and emotional connection are not always the same thing."
+
+        ],
+
+        source:
+          "Related concept: perceived social isolation."
+
+      },
+
+
+      {
+        category: "Human",
+
+        question:
+          "Why does time seem to move faster as we get older?",
+
+        status:
+          "Partly understood",
+
+        answer: [
+
+          "One explanation involves novelty and memory.",
+
+          "New experiences tend to create more distinctive memories. When life becomes more familiar and repetitive, fewer moments stand out when we look back.",
+
+          "That can make a month or year feel shorter in retrospect, even though the clock itself hasn't changed."
+
+        ],
+
+        source:
+          "Related ideas: subjective time perception, novelty, attention, and memory."
+
+      },
+
+
+      {
+        category: "Emotions",
+
+        question:
+          "Why does music make us emotional?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Music interacts with several systems involved in prediction, memory, reward, and emotion.",
+
+          "Our brains constantly anticipate what sound might come next. When music meets, delays, or surprises those expectations, it can create strong emotional responses.",
+
+          "Music can also become linked to personal memories, making a song feel meaningful far beyond its sound."
+
+        ],
+
+        source:
+          "Related fields: music cognition, neuroscience, memory, and reward processing."
+
+      },
+
+
+      {
+        category: "Science",
+
+        question:
+          "Why do we get butterflies when we're nervous?",
+
+        status:
+          "Science knows",
+
+        answer: [
+
+          "The feeling comes from the body's response to stress or excitement.",
+
+          "When the sympathetic nervous system activates, blood flow and energy are redirected toward systems that help us respond quickly.",
+
+          "The digestive system can temporarily behave differently, creating that strange fluttering sensation in the stomach."
+
+        ],
+
+        source:
+          "Related concept: sympathetic nervous system and the fight-or-flight response."
+
+      },
+
+
+      {
+        category: "Emotions",
+
+        question:
+          "Why do we cry when we're extremely happy?",
+
+        status:
+          "Still being studied",
+
+        answer: [
+
+          "Tears aren't limited to sadness. People can cry during overwhelming happiness, relief, pride, or other intense emotions.",
+
+          "One possibility is that crying helps regulate extremely strong emotional states and allows the body to return toward a calmer state.",
+
+          "Exactly why positive emotions sometimes produce tears is still an active area of research."
+
+        ],
+
+        source:
+          "Related fields: emotion regulation and affective neuroscience."
+
+      },
+
+
+      {
+        category: "Emotions",
+
+        question:
+          "Why do we laugh when we're nervous?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Nervous laughter can appear when our emotional state doesn't fit the social situation.",
+
+          "Laughter may help release tension or communicate that we aren't trying to be threatening.",
+
+          "That is why someone might laugh during an uncomfortable conversation even when nothing is actually funny."
+
+        ],
+
+        source:
+          "Related fields: social behavior, emotional regulation, and communication."
+
+      },
+
+
+      {
+        category: "Society",
+
+        question:
+          "Why do trends spread so quickly?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "People naturally pay attention to what other people are doing. This can create social proof: if many people seem interested in something, we may assume it is worth noticing.",
+
+          "Modern social media makes this effect much faster by repeatedly showing users content that is already receiving attention.",
+
+          "A small trend can therefore become highly visible very quickly."
+
+        ],
+
+        source:
+          "Related concepts: social proof, network effects, and information cascades."
+
+      },
+
+
+      {
+        category: "Society",
+
+        question:
+          "Why do people follow crowds even when they disagree?",
+
+        status:
+          "What psychology suggests",
+
+        answer: [
+
+          "People don't always want to be the person who stands apart from a group.",
+
+          "Classic social psychology experiments have shown that group pressure can influence people's stated judgments, even when the correct answer seems obvious.",
+
+          "The effect depends on context, confidence, group size, and many other factors."
+
+        ],
+
+        source:
+          "Related field: conformity research in social psychology."
+
+      },
+
+
+      {
+        category: "Society",
+
+        question:
+          "Why does misinformation spread?",
+
+        status:
+          "What research suggests",
+
+        answer: [
+
+          "False information can spread for many reasons, and not all misinformation is deliberately created.",
+
+          "Content that is surprising, emotional, novel, or threatening is more likely to attract attention and be shared.",
+
+          "People can also share something because they believe it is true, because others are sharing it, or because it supports what they already believe."
+
+        ],
+
+        source:
+          "Related fields: information science, psychology, and social media research."
+
+      },
+
+
+      {
+        category: "Society",
+
+        question:
+          "Why do people judge others so quickly?",
+
+        status:
+          "What psychology suggests",
+
+        answer: [
+
+          "Our brains constantly make rapid predictions about the world.",
+
+          "Making quick judgments can save mental effort, especially when we have limited information.",
+
+          "The problem is that fast judgments can rely on incomplete information, stereotypes, or assumptions that don't accurately represent the person."
+
+        ],
+
+        source:
+          "Related concepts: heuristics, thin-slice judgments, and cognitive bias."
+
+      },
+
+
+      {
+        category: "Earth",
+
+        question:
+          "Why is biodiversity important?",
+
+        status:
+          "Science knows",
+
+        answer: [
+
+          "Biodiversity means the variety of living organisms, genes, and ecosystems on Earth.",
+
+          "Different species interact in complex ways that support processes such as pollination, nutrient cycling, soil formation, and food webs.",
+
+          "Greater biodiversity can also make ecosystems more resilient to disturbances."
+
+        ],
+
+        source:
+          "Related fields: ecology, conservation biology, and ecosystem science."
+
+      },
+
+
+      {
+        category: "Earth",
+
+        question:
+          "Why can't we just recycle our way out of climate change?",
+
+        status:
+          "Science knows",
+
+        answer: [
+
+          "Recycling can reduce waste and sometimes reduce the need for new raw materials, but climate change is driven largely by greenhouse-gas emissions.",
+
+          "Many emissions come from producing and using energy, transportation, industry, agriculture, and land-use changes.",
+
+          "Recycling is useful, but it is only one part of a much larger climate solution."
+
+        ],
+
+        source:
+          "Related fields: climate science, energy systems, and waste management."
+
+      },
+
+
+      {
+        category: "Earth",
+
+        question:
+          "Why does food waste matter if there are people going hungry?",
+
+        status:
+          "A complicated problem",
+
+        answer: [
+
+          "Food insecurity and food waste are connected to larger systems involving production, distribution, affordability, infrastructure, and access.",
+
+          "Food being thrown away does not automatically reach someone who needs it.",
+
+          "However, reducing unnecessary food waste can still save resources, reduce emissions, and improve the efficiency of food systems."
+
+        ],
+
+        source:
+          "Related fields: food systems, economics, sustainability, and nutrition."
+
+      },
+
+
+      {
+        category: "Science",
+
+        question:
+          "Why is the sky blue?",
+
+        status:
+          "Science knows",
+
+        answer: [
+
+          "Sunlight looks white, but it contains many wavelengths of visible light.",
+
+          "When sunlight enters Earth's atmosphere, tiny molecules scatter shorter wavelengths of light more strongly than longer wavelengths.",
+
+          "Blue light is therefore scattered throughout the sky, making the sky appear blue from most directions."
+
+        ],
+
+        source:
+          "Related concept: Rayleigh scattering."
+
+      },
+
+
+      {
+        category: "Science",
+
+        question:
+          "Why do we dream?",
+
+        status:
+          "Still unknown",
+
+        answer: [
+
+          "We know that dreaming is strongly associated with sleep, especially certain stages of sleep, but scientists do not have one complete explanation for why dreams exist.",
+
+          "Ideas include memory processing, emotional regulation, brain simulation, and spontaneous neural activity.",
+
+          "Dreaming is therefore one of those questions where science has many hypotheses but no single final answer."
+
+        ],
+
+        source:
+          "Related fields: sleep science, neuroscience, and memory research."
+
+      },
+
+
+      {
+        category: "Human",
+
+        question:
+          "Why can't we remember being babies?",
+
+        status:
+          "What science suggests",
+
+        answer: [
+
+          "Most people have very few or no autobiographical memories from their first few years of life.",
+
+          "This is often called infantile amnesia.",
+
+          "Developing brain systems, language, our developing sense of self, and the way early experiences are encoded may all contribute to the phenomenon."
+
+        ],
+
+        source:
+          "Related field: developmental psychology and autobiographical memory."
+
+      },
+
+
+      {
+        category: "Big Questions",
+
+        question:
+          "Why do we exist?",
+
+        status:
+          "Science + philosophy",
+
+        answer: [
+
+          "Science can explain many things about how the universe developed and how life emerged, but the question of why existence exists at all is different.",
+
+          "Physics can describe the universe's history. Biology can explain how life evolves. Neither necessarily provides a final answer to why there is something rather than nothing.",
+
+          "That makes this question partly scientific and partly philosophical."
+
+        ],
+
+        source:
+          "Related fields: cosmology, philosophy of existence, and metaphysics."
+
+      },
+
+
+      {
+        category: "Big Questions",
+
+        question:
+          "Why do we want to find meaning?",
+
+        status:
+          "Philosophy + psychology",
+
+        answer: [
+
+          "Humans naturally look for patterns, explanations, goals, and stories that connect events together.",
+
+          "Meaning can help people understand their experiences and decide what matters to them.",
+
+          "Whether meaning is something we discover or something we create is a question philosophers have debated for centuries."
+
+        ],
+
+        source:
+          "Related fields: existential philosophy, psychology, and meaning-making."
+
+      },
+
+
+      {
+        category: "Big Questions",
+
+        question:
+          "Why are we afraid of death?",
+
+        status:
+          "Science + philosophy",
+
+        answer: [
+
+          "Fear of death may be connected to several things: survival instincts, uncertainty, attachment to people and experiences, and our inability to know exactly what happens after death.",
+
+          "Different cultures and individuals understand death in very different ways.",
+
+          "Science can study the psychological and biological aspects of death anxiety, but it cannot answer every philosophical question surrounding mortality."
+
+        ],
+
+        source:
+          "Related fields: psychology, anthropology, philosophy, and thanatology."
+
+      },
+
+
+      {
+        category: "Big Questions",
+
+        question:
+          "Why do we ask “why”?",
+
+        status:
+          "The question behind the project",
+
+        answer: [
+
+          "Because curiosity is one of the ways humans learn.",
+
+          "Asking “why” pushes us beyond memorizing what happens and toward understanding causes, patterns, and connections.",
+
+          "Maybe the most interesting thing about “why” is that every answer can create another question."
+
+        ],
+
+        source:
+          "Related ideas: curiosity, causal reasoning, scientific inquiry, and philosophy."
+
+      }
+
+    ];
+
+
+
+    /* =========================================================
+       DISPLAY QUESTIONS
+    ========================================================= */
+
+    const grid =
+      document.getElementById("envelopeGrid");
+
+
+    function displayQuestions(list) {
+
+      grid.innerHTML = "";
+
+
+      if (list.length === 0) {
+
+        grid.innerHTML = `
+
+          <div
+            style="
+              grid-column:1/-1;
+              text-align:center;
+              padding:70px 20px;
+              color:#887e75;
+            "
+          >
+
+            <div
+              style="
+                font-size:40px;
+                margin-bottom:15px;
+              "
+            >
+              ✦
+            </div>
+
+            <h3
+              style="
+                font-family:'Playfair Display',serif;
+                font-size:28px;
+                margin-bottom:8px;
+              "
+            >
+              No whys found.
+            </h3>
+
+            <p>
+              Try searching for something else.
+            </p>
+
+          </div>
+
+        `;
+
+        return;
+      }
+
+
+      list.forEach((item, index) => {
+
+        const card =
+          document.createElement("div");
+
+
+        card.className =
+          "envelope-card";
+
+
+        card.innerHTML = `
+
+          <div class="envelope-inner">
+
+
+            <!-- FRONT OF ENVELOPE -->
+
+            <div class="envelope-front">
+
+              <div class="envelope-label">
+
+                <div class="envelope-number">
+
+                  WHY
+                  ${String(index + 1).padStart(2, "0")}
+
+                </div>
+
+
+                <h3>
+                  ${item.question}
+                </h3>
+
+
+                <div class="tap">
+                  tap to reveal the answer →
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- BACK OF ENVELOPE -->
+
+            <div class="envelope-back">
+
+              <div class="back-category">
+                ${item.category}
+              </div>
+
+              <div class="back-question">
+                ${item.question}
+              </div>
+
+              <div class="open-answer">
+                Click again to read the answer →
+              </div>
+
+            </div>
+
+
+          </div>
+
+        `;
+
+
+        card.addEventListener(
+          "click",
+          () => {
+
+            if (
+              !card.classList.contains("open")
+            ) {
+
+              card.classList.add("open");
+
+            } else {
+
+              openModal(item);
+
+            }
+
+          }
+        );
+
+
+        grid.appendChild(card);
+
+      });
+
+    }
+
+
+
+    /* =========================================================
+       MODAL
+    ========================================================= */
+
+    function openModal(item) {
+
+      document
+        .getElementById("modalCategory")
+        .textContent =
+        item.category;
+
+
+      document
+        .getElementById("modalQuestion")
+        .textContent =
+        item.question;
+
+
+      document
+        .getElementById("modalStatus")
+        .textContent =
+        item.status;
+
+
+      document
+        .getElementById("modalAnswer")
+        .innerHTML =
+
+        item.answer
+          .map(
+            paragraph =>
+              `<p>${paragraph}</p>`
+          )
+          .join("");
+
+
+      document
+        .getElementById("modalSource")
+        .innerHTML =
+
+        `
+          <strong>
+            Further reading:
+          </strong>
+          <br>
+          ${item.source}
+        `;
+
+
+      document
+        .getElementById("answerModal")
+        .classList.add("show");
+
+
+      document.body.style.overflow =
+        "hidden";
+
+    }
+
+
+
+    function closeModal() {
+
+      document
+        .getElementById("answerModal")
+        .classList.remove("show");
+
+
+      document.body.style.overflow =
+        "";
+
+    }
+
+
+
+    /* =========================================================
+       CLOSE MODAL WHEN CLICKING OUTSIDE
+    ========================================================= */
+
+    document
+      .getElementById("answerModal")
+      .addEventListener(
+        "click",
+        function(event) {
+
+          if (
+            event.target === this
+          ) {
+
+            closeModal();
+
+          }
+
+        }
+      );
+
+
+
+    /* =========================================================
+       ESCAPE KEY
+    ========================================================= */
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+
+    /* =========================================================
+       SEARCH
+    ========================================================= */
+
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "input",
+        function() {
+
+          const query =
+            this.value
+              .toLowerCase()
+              .trim();
+
+
+          const filtered =
+            questions.filter(item =>
+
+              item.question
+                .toLowerCase()
+                .includes(query)
+
+              ||
+
+              item.category
+                .toLowerCase()
+                .includes(query)
+
+              ||
+
+              item.answer
+                .join(" ")
+                .toLowerCase()
+                .includes(query)
+
+            );
+
+
+          displayQuestions(filtered);
+
+        }
+      );
+
+
+
+    /* =========================================================
+       CATEGORY FILTER
+    ========================================================= */
+
+    document
+      .querySelectorAll(".category")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          function() {
+
+
+            document
+              .querySelectorAll(".category")
+              .forEach(btn =>
+                btn.classList.remove(
+                  "active"
+                )
+              );
+
+
+            this.classList.add(
+              "active"
+            );
+
+
+            const category =
+              this.dataset.category;
+
+
+            if (
+              category === "All"
+            ) {
+
+              displayQuestions(
+                questions
+              );
+
+            } else {
+
+              displayQuestions(
+
+                questions.filter(
+                  item =>
+                    item.category ===
+                    category
+                )
+
+              );
+
+            }
+
+          }
+        );
+
+      });
+
+
+
+    /* =========================================================
+       RANDOM WHY
+    ========================================================= */
+
+    function randomWhy() {
+
+      const randomIndex =
+        Math.floor(
+          Math.random() *
+          questions.length
+        );
+
+
+      const item =
+        questions[randomIndex];
+
+
+      openModal(item);
+
+    }
+
+
+
+    /* =========================================================
+       INITIAL LOAD
+    ========================================================= */
+
+    displayQuestions(
+      questions
+    );
+
+  </script>
+
+</body>
+</html>
